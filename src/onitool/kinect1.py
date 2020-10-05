@@ -1251,6 +1251,6 @@ def niteprops():
 #DCRCDIS 3.6893488147419103e+19
 
 if __name__ == '__main__':
-    print len(D2S().tostring())
-    print len(S2D().tostring())
+    print(len(D2S().tostring()))
+    print(len(S2D().tostring()))
 

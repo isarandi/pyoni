@@ -13,7 +13,7 @@ def copy(args,a,b):
             w.emitseek(h["nid"])
         elif h["rt"] == oni.RECORD_NEW_DATA:
             hh = oni.parsedatahead(a,h)            
-            print dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"])
+            print(dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"]))
             w.addframe(h["nid"],hh["frameid"],hh["timestamp"],a.read(h["ps"]))
         else:
             w.copyblock(h,a)
@@ -42,7 +42,7 @@ def cut(args,target,a,b):
                 if qff is None:
                     qff = hh # original
                     qf[h["nid"]] = qff
-                print dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"])
+                print(dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"]))
                 w.addframe(h["nid"],hh["frameid"]-qff["frameid"]+1,hh["timestamp"]-qff["timestamp"],a.read(h["ps"]))
         else:
             w.copyblock(h,a)
@@ -60,7 +60,7 @@ def strip(args,action,a,b):
         h = r.next()
         if h is None:
             break
-        elif h["rt"] == oni.RECORD_NODE_ADDED:
+        elif h["rt"] in oni.RECORD_NODE_ADDED_ALL:
             hh = oni.parseadded(a,h)
             if hh["nodetype"] == ignoredtype:
                 ignoredid = h["nid"]
@@ -72,7 +72,7 @@ def strip(args,action,a,b):
             w.emitseek(h["nid"])
         elif h["rt"] == oni.RECORD_NEW_DATA:
             hh = oni.parsedatahead(a,h)            
-            print dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"])
+            print(dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"]))
             w.addframe(h["nid"],hh["frameid"],hh["timestamp"],a.read(h["ps"]))
         else:
             w.copyblock(h,a)

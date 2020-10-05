@@ -12,10 +12,10 @@ dir_path = os.path.dirname(path)
 for a in types:
 	try:
 		pa = os.path.join(dir_path,"libxndec" + a)
-		print "looking for",pa
+		print("looking for",pa)
 		x = ctypes.CDLL(pa)
 		if x is not None:
-			print "found pa",pa
+			print("found pa",pa)
 			break
 	except:
 		pass
@@ -97,4 +97,4 @@ if __name__ == "__main__":
 
 	a = "1234"
 	b = allocoutput16(123)
-	print doXnStreamUncompressDepth16ZWithEmbTable(a,b)
+	print(doXnStreamUncompressDepth16ZWithEmbTable(a,b))

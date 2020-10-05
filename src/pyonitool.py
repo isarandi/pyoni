@@ -28,7 +28,7 @@ import onitool.toolext as toolext
 try:
     import onitool.toolreg as toolreg
 except:
-    print sys.exc_info()
+    print(sys.exc_info())
     toolreg =None
 import onitool.toolinfo as toolinfo
 import onitool.toolcut as toolcut
@@ -38,7 +38,7 @@ try:
     import onitool.toolreg as toolreg
 except:
     toolreg = None
-    print "toolreg not available"
+    print("toolreg not available")
 
 
 def interval(s,t,tt):
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.file is None:
-        print "Required: ONI filename"
+        print("Required: ONI filename")
         sys.exit(-1)
 
     action = ""
@@ -102,135 +102,135 @@ if __name__ == "__main__":
 
     if args.mjpeg:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "mjpeg"
 
     if args.rescale:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "rescale"
 
     if args.stripcolor:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "stripcolor"
 
     if args.stripdepth:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "stripdepth"
 
     if args.stripir:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "stripir"
 
     if args.fixcut :
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is not None:
-            print "FIXCUT works in patch mode"
+            print("FIXCUT works in patch mode")
             sys.exit(-1)
         patchaction = True
         action = "fixcut"
 
     if args.makeregistered:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "FIXNITE requires output"
+            print("FIXNITE requires output")
             sys.exit(-1)
         action = "makeregistered"
 
     if args.isregistered:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         action = "isregistered"
     if args.fixnite :
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "FIXNITE requires output"
+            print("FIXNITE requires output")
             sys.exit(-1)
         action = "fixnite"
 
     if args.copy:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "copy"
 
     if args.seeks:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is not None:
-            print "Not Required output"
+            print("Not Required output")
             sys.exit(-1)
         action = "seeks"
 
     if args.checkcut:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is not None:
-            print "Not Required: ONI filename in output --output"
+            print("Not Required: ONI filename in output --output")
             sys.exit(-1)
         action = "checkcut"
 
     if args.cutbyframe is not None:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         target = ("frame",args.cutbyframe)
         action = "cutbyframe"
 
     if args.cutbytime is not None:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         target = ("timeus",[int(x*1E6) for x in args.cutbyframe])
         action = "cutbytime"
 
     if args.extractframes:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.outputdir == "":
-            print "output dir needed for extractframes"
+            print("output dir needed for extractframes")
             sys.exit(-1)
         action = "extractframes"
 
@@ -242,59 +242,59 @@ if __name__ == "__main__":
     for x in varia:
         if getattr(args,x):
             if action != "":
-                print "Already specified action",action
+                print("Already specified action",action)
                 sys.exit(-1)
             subaction = x
             action = "extract"
             extractpath = getattr(args,x)
-            print "extract action",extractpath
+            print("extract action",extractpath)
 
     if args.dump:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         action = "dump"
 
     if args.info:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         action = "info"
 
     if args.compare is not None:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         action = "compare"
 
     if args.dupframes:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "dupframes"
 
     if args.skipframes:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         action = "skipframes"
     if args.registercolor:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "registercolor"
     if args.registerdepth:
         if action != "":
-            print "Already specified action",action
+            print("Already specified action",action)
             sys.exit(-1)
         if args.output is None:
-            print "Required: ONI filename in output --output"
+            print("Required: ONI filename in output --output")
             sys.exit(-1)
         action = "registerdepth"
 
@@ -302,7 +302,7 @@ if __name__ == "__main__":
     if patchaction:
         shutil.copyfile(args.file,args.output)
         args.file = args.output
-        print args.file
+        print(args.file)
         a = open(args.file,"r+b")
     else:
         a = open(args.file,"rb")
@@ -350,14 +350,14 @@ if __name__ == "__main__":
     elif action == "dump" or action == "":
         toolinfo.dump(args,a)
     else:
-        print "unknown action",action
+        print("unknown action",action)
 
     if False:
         if needclose:
             # if need to close first PATCH the NODE ADDED
             # then patch the writeseek        
             for q in stats.values():
-                print "writing",q
+                print("writing",q)
                 q.patchframeheader(b)
                 q.writeseek(b)
             h0["ts"] = max([q.maxts for q in stats.values()])

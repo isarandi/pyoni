@@ -2,14 +2,14 @@
 #
 # Requires to build xndec
 import struct
-from onifile import *
+from onitool.onifile import *
 from xndec import *
 
 if __name__ == "__main__":
     import sys,os
 
     if len(sys.argv) == 0:
-        print "Required: ONIfilename"
+        print("Required: ONIfilename")
         sys.exit(-1)
 
     docolor = len(sys.argv) > 3
@@ -39,12 +39,12 @@ if __name__ == "__main__":
             if h["nid"] == 1:
                 if h["rt"] == RECORD_NEW_DATA:
                     pd = parsedata(a,h)
-                    print pd["dataoffset"],h["ps"],h["fs"]
+                    print(pd["dataoffset"],h["ps"],h["fs"])
                     z = a.read(h["ps"])
                     count += 1
                     if count == 50:
                         code,size = doXnStreamUncompressDepth16ZWithEmbTable(z,ob)
-                        print "decoded ",code,size,"vs input",len(z),"output",len(ob)
+                        print("decoded ",code,size,"vs input",len(z),"output",len(ob))
 
                         o = open("x.depth","wb")
                         o.write(ob)

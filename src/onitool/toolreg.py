@@ -50,7 +50,7 @@ def register(args,action,a,b):
         elif h["rt"] == oni.RECORD_NEW_DATA:
             continue # otherwise no seek
         elif h["rt"] in ignore:
-            print "ignored",h["rt"]
+            print("ignored",h["rt"])
             continue
         #TODO mark registered
         #        elif h["rt"] == oni.RECORD_INT_PROPERTY:
@@ -68,9 +68,9 @@ def register(args,action,a,b):
     td = r.getseektable(idd)
     tc = r.getseektable(idc)
     if tc is None:
-        raise "Missing color"
+        raise Exception("Missing color")
     if td is None:
-        raise "Missing depth"        
+        raise Exception("Missing depth")
     tc["nid"] = idc
     td["nid"] = idd
     tc["times"] = [x["timestamp"] for x in tc["data"]]
@@ -114,9 +114,9 @@ def register(args,action,a,b):
             fi,f = findnearest(secondary,x["timestamp"])
             dtimes.append(f["timestamp"]-x["timestamp"])
             dframes.append(f["frameid"]-x["frameid"])
-            print x["frameid"],f["frameid"],x["timestamp"],f["timestamp"],(f["frameid"]-x["frameid"]),(f["timestamp"]-x["timestamp"]),(f["offset"]-x["offset"])
-        print "time min",min(dtimes),"max",max(dtimes)
-        print "frame min",min(dframes),"max",max(dframes)
+            print(x["frameid"],f["frameid"],x["timestamp"],f["timestamp"],(f["frameid"]-x["frameid"]),(f["timestamp"]-x["timestamp"]),(f["offset"]-x["offset"]))
+        print("time min",min(dtimes),"max",max(dtimes))
+        print("frame min",min(dframes),"max",max(dframes))
 
     for primaryframe in primary["data"]:
         fi,secondaryframe = findnearest(secondary,primaryframe["timestamp"])
@@ -135,7 +135,7 @@ def register(args,action,a,b):
             a.seek(hh["offset"]) # to data
             h = oni.readrechead(a)
             hhreal = oni.parsedatahead(a,h)
-            print h,hhreal
+            print(h,hhreal)
             nid = h["nid"]
 
             # TODO support for sizes different among streams
@@ -174,27 +174,27 @@ def register(args,action,a,b):
                     # depth is preserved in depthmode
                     w.addframe(nid,hh["frameid"],hh["timestamp"],rawdata)
             else:
-                print "unsupported codec",codec
+                print("unsupported codec",codec)
 
 
-        print "registering ",modifycolor and "newcolor" or "newdepth","depthframe(frame,time)",(hd["frameid"],hd["timestamp"]),"colorframe(frame,time)",(hc["frameid"],hc["timestamp"]),"deltaframe(c-d)(frame,time)",(hc["frameid"]-hd["frameid"],hc["timestamp"]-hd["timestamp"])
+        print("registering ",modifycolor and "newcolor" or "newdepth","depthframe(frame,time)",(hd["frameid"],hd["timestamp"]),"colorframe(frame,time)",(hc["frameid"],hc["timestamp"]),"deltaframe(c-d)(frame,time)",(hc["frameid"]-hd["frameid"],hc["timestamp"]-hd["timestamp"]))
         if modifycolor:
             #anyregistration on (colordata,depthdata) -> colordataout
             # autoalloc
-            print depthdata.__class__,len(depthdata),colordata.__class__,len(colordata),size
+            print(depthdata.__class__,len(depthdata),colordata.__class__,len(colordata),size)
             colordataout = anyregistration.doregister2color(colordataout,depthdata,colordata,size,model.Drgb,model.Krgb,size,model.Ddepth,model.Kdepth,model.R,model.T)
             im = Image.frombytes("RGB", size, colordataout.raw, decoder_name='raw')
             b = io.BytesIO()
             im.save(b, 'JPEG')
             w.addframe(idc,hd["frameid"],args.registersynctime and hd["timestamp"] or hc["timestamp"],b.getvalue()) # keep timestamp, discard frameid
-            print "\tcompressed from",xres*yres*3,"to",len(b.getvalue())
+            print("\tcompressed from",xres*yres*3,"to",len(b.getvalue()))
             # TODO add option for faking timestamp
         else:
             #anyregistration (colordata,depthdata) -> depthdataout
             depthdataout = anyregistration.doregister2depth(depthdataout,depthdata,colordata,size,model.Drgb,model.Krgb,size,model.Ddepth,model.Kdepth,model.R,model.T)
-            print "\tgenerated",depthdataout.__class__,len(depthdataout)
+            print("\tgenerated",depthdataout.__class__,len(depthdataout))
             status,size = xndec.doXnStreamCompressDepth16ZWithEmbTable(depthdataout,ob,maxoutdepth)
-            print "\tcompressed from",xres*yres*2,"to",size
+            print("\tcompressed from",xres*yres*2,"to",size)
             w.addframe(idd,hc["frameid"],args.registersynctime and hc["timestamp"] or hd["timestamp"],ob[0:size]) # keep timestamp, discard frameid
             # TODO add option for faking timestamp
 

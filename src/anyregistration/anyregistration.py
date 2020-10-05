@@ -59,7 +59,7 @@ def buffer2image(buffer,size):
 	return Image.frombytes("RGB", size, buffer, decoder_name='raw')
 
 def saveimage(image,name,t="JPEG"):
-	print "saving image",image
+	print("saving image",image)
 	image.save(name,t)
 
 def savedepthpng(buffer,size,name):
@@ -67,7 +67,7 @@ def savedepthpng(buffer,size,name):
 	w = png.Writer(width=size[0],height=size[1],greyscale=True,bitdepth=16)
 	aa = array.array("H")
 	aa.fromstring(buffer)
-	print "saving",size,"of",len(aa)
+	print("saving",size,"of",len(aa))
 	w.write(open(name,"wb"),[aa[i*xres:(i+1)*xres] for i in range(0,yres)])	
 
 def savedepthpngcolor(buffer,size,name):
@@ -75,7 +75,7 @@ def savedepthpngcolor(buffer,size,name):
 	w = png.Writer(width=size[0],height=size[1],greyscale=True,bitdepth=8)
 	aa = array.array("H")
 	aa.fromstring(buffer)
-	print "saving",size,"of",len(aa)
+	print("saving",size,"of",len(aa))
 	rows = [aa[i*xres:(i+1)*xres] for i in range(0,yres)]
 	w.write(open(name,"wb"),[[min(int(x*255.0/8000.0),255) for x in y] for y in rows])
 
@@ -83,7 +83,7 @@ def depthpng2buffer(name):
 	# load png filename grayscale 16 bit
 	p = png.Reader(open(name,"rb"))
 	w,h,pi,me = p.read_flat()
-	print "read ",w,h,len(pi),me
+	print("read ",w,h,len(pi),me)
 	return pi
 
 def savedepth(buffer,name):
@@ -105,7 +105,7 @@ def doregister2color(outc,depthin,colorin,sizergb,Drgb,Krgb,sizedepth,Ddepth,Kde
 	poutc = ctypes.cast(outc,p8)
 	prgb = ctypes.cast(ctypes.c_char_p(colorin),p8)
 	if isinstance(depthin,array.array):
-		print "input is array"
+		print("input is array")
 		addr, count = depthin.buffer_info()
 		pdepth = ctypes.cast(addr, p16)
 	else:
@@ -136,7 +136,7 @@ def doregister2depth(outd,depthin,colorin,sizergb,Drgb,Krgb,sizedepth,Ddepth,Kde
 	pDrgb = ad5(*Drgb)
 	pR = ad9(*R)
 	pT = ad3(*T)
-	print ctypes.addressof(poutd.contents)
+	print(ctypes.addressof(poutd.contents))
 	register2depth(poutd,sizergb[0],sizergb[1],prgb,sizedepth[0],sizedepth[1],pdepth,pKdepth,pKrgb,pR,pT)
 	return outd
 

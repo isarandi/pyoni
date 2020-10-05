@@ -14,7 +14,7 @@ def rescale(args,factor,a,b):
             w.emitseek(h["nid"])
         elif h["rt"] == oni.RECORD_NEW_DATA:
             hh = oni.parsedatahead(a,h)            
-            print dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"])
+            print(dict(nid=h["nid"],ps=h["ps"],fs=h["fs"],frameid=hh["frameid"],timestamp=hh["timestamp"]))
             w.addframe(h["nid"],hh["frameid"],factor*hh["timestamp"],a.read(h["ps"]))
         else:
             w.copyblock(h,a)
@@ -33,7 +33,7 @@ def rescale(args,factor,a,b):
                     #print h["nid"],t,t2
                     q = stats.get(h["nid"],None)
                     if q is None:
-                        print "new for",h["nid"],"in new data"
+                        print("new for",h["nid"],"in new data")
                         q = [t2,t2,None,None]
                         stats[h["nid"]] = q
                     else:
@@ -55,7 +55,7 @@ def rescale(args,factor,a,b):
                     hh = oni.parseadded(a,h)
                     q = stats.get(h["nid"],None)
                     if q is None:
-                        print "new for",h["nid"],"in added"
+                        print("new for",h["nid"],"in added")
                         q = [None,None,h,hh]
                         stats[h["nid"]] = q
                     else:
@@ -64,7 +64,7 @@ def rescale(args,factor,a,b):
                 elif h["rt"] == oni.RECORD_SEEK_TABLE:
                     x = oni.parseseek(a,h)
                     n = len(x["data"])
-                    print "seektable",h["nid"],"of",n
+                    print("seektable",h["nid"],"of",n)
                     for i in range(0,n):
                         x["data"][i]["timestamp"] = int(x["data"][i]["timestamp"]*args.rescale)
                     oni.writeseek(a,h) 
